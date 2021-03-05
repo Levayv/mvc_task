@@ -4,6 +4,7 @@ namespace App\Controllers\ArticleController;
 
 use Core\Controllers\Controller\Controller;
 use Core\Models\Model\Model;
+use Core\Views\ViewHandler\ViewHandler;
 
 class ArticleController extends Controller
 {
@@ -16,6 +17,9 @@ class ArticleController extends Controller
     {
         // TODO: Implement index() method.
         $article = new Model();
-        return 'mock_data';
+        $article->getList();
+        //$article->getSingle();
+        ViewHandler::doSomething('home', ['articles' => $article->getList()]);
+        return 'mock_data'; //todo research further
     }
 }
