@@ -1,6 +1,6 @@
 <?php
 
-namespace core\something;
+namespace Core\Views\ViewHandler;
 
 class ViewHandler
 {

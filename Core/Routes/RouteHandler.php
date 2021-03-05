@@ -1,8 +1,9 @@
 <?php
 
-namespace core\route;
+namespace Core\Routes\RouteHandler;
 
-use core\something\ViewHandler;
+use App\Controllers\ArticleController\ArticleController;
+use Core\Views\ViewHandler\ViewHandler;
 
 class RouteHandler
 {

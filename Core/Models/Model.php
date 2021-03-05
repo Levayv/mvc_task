@@ -1,6 +1,6 @@
 <?php
 
-namespace core\model;
+namespace Core\Models\Model;
 
 use ReflectionClass;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace app\controller;
+namespace App\Controllers\ArticleController;
 
-use core\controller\Controller;
-use core\something\ViewHandler;
+use Core\Controllers\Controller\Controller;
+use Core\Models\Model\Model;
 
 class ArticleController extends Controller
 {
@@ -15,7 +15,7 @@ class ArticleController extends Controller
     function index()
     {
         // TODO: Implement index() method.
-
+        $article = new Model();
         return 'mock_data';
     }
 }
