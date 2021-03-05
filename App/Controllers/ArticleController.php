@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controllers\ArticleController;
+namespace App\Controllers;
 
-use Core\Controllers\Controller\Controller;
-use Core\Models\Model\Model;
-use Core\Views\ViewHandler\ViewHandler;
+use Core\Controllers\Controller;
+use Core\Models\Model;
+use Core\Views\ViewHandler;
 
 class ArticleController extends Controller
 {

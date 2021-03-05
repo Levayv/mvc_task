@@ -1,6 +1,6 @@
 <?php
 
-use Core\Routes\RouteHandler\RouteHandler;
+use Core\Routes\RouteHandler;
 
 require __DIR__ . '/../vendor/autoload.php';
 

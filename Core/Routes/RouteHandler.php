@@ -1,22 +1,24 @@
 <?php
 
-namespace Core\Routes\RouteHandler;
+namespace Core\Routes;
 
-use App\Controllers\ArticleController\ArticleController;
-use Core\Routes\Route\Route;
-use Core\Views\ViewHandler\ViewHandler;
+use App\Controllers\ArticleController;
+use Core\Routes\Route;
+use Core\Views\ViewHandler;
 
 final class RouteHandler
 {
     // REST cheat sheet ...
-    // name get/post
-    // index get
-    // show get
-    // create get
-    // store post
-    // edit get
-    // update post
-    // delete post
+    //
+    // action get/post desc
+    //
+    // index get list of all resources
+    // show get show single resource
+    // create get show resource creation form
+    // store post save newly created resource
+    // edit get shwo resource edit form
+    // update post save existing resource changes
+    // delete post delete resource
 
     private static array $routeBagGET = [];
     private static array $routeBagPOST = [];
@@ -31,7 +33,7 @@ final class RouteHandler
      */
     public static function add($method, $url, $controller, $action, $name = '')
     {
-        if ($method == 'get' || $method == 'get') {
+        if ($method == 'GET' || $method == 'get') {
             array_push(self::$routeBagGET, new Route ('get', $url, $controller, $action, $name));
         }
         if ($method == 'POST' || $method == 'post') {
@@ -106,10 +108,10 @@ final class RouteHandler
 //         $controllerInstance = new ArticleController;
 //         $controllerInstance->index();
 
-        $controllerClassName = 'App\Controllers\\'.$routeBagActive[$key]->controller.'\\'.$routeBagActive[$key]->controller;
+        $controllerClassName = 'App\Controllers\\'.$routeBagActive[$key]->controller;
         $controllerActionName = $routeBagActive[$key]->action;
 
-
+        // todo fix namespaces ... why its double nested ???????????????
 //        use App\Controllers\ArticleController\ArticleController;
 
         $controllerInstance = new $controllerClassName;
