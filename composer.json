@@ -1,16 +1,22 @@
 {
-    "name": "test/mvc_task",
-    "description": "Test Task",
-    "type": "project",
-    "license": "GPL-2.0-only / GPL-2.0-or-later",
-    "authors": [
-        {
-            "name": "Levon Ayvazyan",
-            "email": "LevonAyvazyan43@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {
-        "php": "^7.4"
+  "name": "test/mvc_task",
+  "description": "Test Task",
+  "type": "project",
+  "license": "GPL-2.0-only / GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Levon Ayvazyan",
+      "email": "LevonAyvazyan43@gmail.com"
     }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^7.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "app\\": "app",
+      "core\\": "core"
+    }
+  }
 }
