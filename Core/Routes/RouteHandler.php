@@ -2,9 +2,7 @@
 
 namespace Core\Routes;
 
-use App\Controllers\ArticleController;
-use Core\Routes\Route;
-use Core\Views\ViewHandler;
+use Core\Exceptions\BasicException;
 
 final class RouteHandler
 {
@@ -12,13 +10,13 @@ final class RouteHandler
     //
     // action get/post desc
     //
-    // index get list of all resources
-    // show get show single resource
-    // create get show resource creation form
-    // store post save newly created resource
-    // edit get shwo resource edit form
-    // update post save existing resource changes
-    // delete post delete resource
+    // index    get     list of all resources
+    // show     get     show single resource
+    // create   get     show resource creation form
+    // store    post    save newly created resource
+    // edit     get     show resource edit form
+    // update   post    save existing resource changes
+    // delete   post    delete resource
 
     private static array $routeBagGET = [];
     private static array $routeBagPOST = [];
@@ -49,18 +47,13 @@ final class RouteHandler
         return $currentURI;
     }
 
-    public static function doSomething()
+
+    /**
+     * Find corresponding Controller by incoming request's route
+     * @throws BasicException
+     */
+    public static function handleRequest()
     {
-        // todo move route registration from core to app
-
-        self::add('get', '/article', 'ArticleController', 'index', 'article-index');
-        self::add('get', '/article/1', 'ArticleController', 'show', 'article-show');
-
-        self::add('get', '/article/create', 'ArticleController', 'create', 'article-create');
-        self::add('post', '/article', 'ArticleController', 'store', 'article-store');
-
-        // todo end
-
         //todo create 'request' object
 //        $request = [
 //            'method' => 'get',
@@ -79,7 +72,8 @@ final class RouteHandler
 
 
         if (!$_SERVER['REQUEST_METHOD'] == 'GET' || !$_SERVER['REQUEST_METHOD'] == 'POST') {
-            ViewHandler::doSomething('500');
+            // todo implement redirect ?
+            throw new BasicException('unsupported request method', 500);
         }
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $routeBagActive = self::$routeBagGET;
@@ -90,16 +84,15 @@ final class RouteHandler
 
         // todo optimise ... look for array function complexities
         if (in_array($routePath, array_column($routeBagActive, 'url'))) {
-            $key = null;
-            echo (isset($key) ? 'true' : 'false');
+            echo(isset($key) ? 'true' : 'false');
             $key = array_search($routePath, array_column($routeBagActive, 'url'));
             // todo research if this solution makes sense ? Is it even slightly faster then directly searching ?
-
-            if (!isset($key)) {
-                ViewHandler::doSomething('500' , 'route not found , key = '.$key);
-            }
+        }
+        if (!isset($key)) {
+            throw new BasicException('route not found', 500);
         }
 
+        // todo add logger
         echo '<pre>' . '$routePath = ' . print_r($routePath, 1) . '</pre>';
         echo '<pre>' . '$routeBag = ' . print_r(array_column($routeBagActive, 'url'), 1) . '</pre>';
         echo '<pre>' . 'foundByKey controller = ' . print_r($routeBagActive[$key]->controller, 1) . '</pre>';
@@ -108,28 +101,15 @@ final class RouteHandler
 //         $controllerInstance = new ArticleController;
 //         $controllerInstance->index();
 
-        $controllerClassName = 'App\Controllers\\'.$routeBagActive[$key]->controller;
+        $controllerClassName = 'App\Controllers\\' . $routeBagActive[$key]->controller;
         $controllerActionName = $routeBagActive[$key]->action;
-
-        // todo fix namespaces ... why its double nested ???????????????
-//        use App\Controllers\ArticleController\ArticleController;
 
         $controllerInstance = new $controllerClassName;
         $controllerInstance->$controllerActionName();
 
-//        switch ($routePath) {
-//            // todo
-//            //  determine controller name and pass to CORE ?
-//            //  parse request parameters to
-//            //  id ?
-//
-//            case '/home' :
-//                $controller = new ArticleController();
-//                $controller->index();
-//                break;
-//            default:
-//                ViewHandler::doSomething('404');
-//        }
+        // todo
+        //  parse request parameters to
+        //  id ?
 
     }
 }

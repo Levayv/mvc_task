@@ -1,8 +1,8 @@
 <?php
 
-use Core\Routes\RouteHandler;
+use Core\Kernel;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-RouteHandler::doSomething();
-
+$kernel = new Kernel();
+$kernel->start();
