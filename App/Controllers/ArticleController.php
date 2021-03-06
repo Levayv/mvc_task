@@ -15,11 +15,15 @@ class ArticleController extends Controller
 
     function index()
     {
-        // TODO: Implement index() method.
         $article = new Model();
-        $article->getList();
-        //$article->getSingle();
-        ViewHandler::doSomething('home', ['articles' => $article->getList()]);
+        ViewHandler::doSomething('index', ['articles' => $article->getList()]);
+        return 'mock_data'; //todo research further
+    }
+
+    function show()
+    {
+        $article = new Model();
+        ViewHandler::doSomething('show', ['article' => $article->getSingle()]);
         return 'mock_data'; //todo research further
     }
 }

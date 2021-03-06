@@ -3,12 +3,14 @@
 namespace Core\Routes;
 
 use Core\Exceptions\BasicException;
+use Core\Exceptions\FatalException;
+use Core\Http\Request;
 
 final class RouteHandler
 {
     // REST cheat sheet ...
     //
-    // action get/post desc
+    // action   method  description
     //
     // index    get     list of all resources
     // show     get     show single resource
@@ -39,42 +41,18 @@ final class RouteHandler
         }
     }
 
-    private function getRequestUrlPath()
-    {
-        $currentURI = (isset($_SERVER['REQUEST_URI'])) ? ($_SERVER['REQUEST_URI']) : '/article';
-        //$currentURI = explode('/', $currentURI);
-        // todo change this solution , it is for single resource handling ONLY
-        return $currentURI;
-    }
-
-
     /**
      * Find corresponding Controller by incoming request's route
+     * @param Request $request
      * @throws BasicException
      */
-    public static function handleRequest()
+    public static function handleRequest(Request $request)
     {
-        //todo create 'request' object
-//        $request = [
-//            'method' => 'get',
-//            'url' => '/home',
-//            'controller' => 'ArticleController',
-//            'action' => 'index',
-//            'route_name' => 'show-article',
-//        ];
 
-        $routePath = self::getRequestUrlPath();
+        // todo change this solution , it is for single resource handling ONLY
+        $routePath = $request->getURL();
         $routeBagActive = null;
 
-
-        if (!isset($_SERVER['REQUEST_METHOD'])) $_SERVER['REQUEST_METHOD'] = 'GET';
-        echo 'request method is ' . $_SERVER['REQUEST_METHOD'] . PHP_EOL;
-
-
-        if (!$_SERVER['REQUEST_METHOD'] == 'GET' || !$_SERVER['REQUEST_METHOD'] == 'POST') {
-            // todo implement redirect ?
-            throw new BasicException('unsupported request method', 500);
-        }
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $routeBagActive = self::$routeBagGET;
         }
@@ -84,7 +62,6 @@ final class RouteHandler
 
         // todo optimise ... look for array function complexities
         if (in_array($routePath, array_column($routeBagActive, 'url'))) {
-            echo(isset($key) ? 'true' : 'false');
             $key = array_search($routePath, array_column($routeBagActive, 'url'));
             // todo research if this solution makes sense ? Is it even slightly faster then directly searching ?
         }
@@ -92,14 +69,13 @@ final class RouteHandler
             throw new BasicException('route not found', 500);
         }
 
-        // todo add logger
-        echo '<pre>' . '$routePath = ' . print_r($routePath, 1) . '</pre>';
-        echo '<pre>' . '$routeBag = ' . print_r(array_column($routeBagActive, 'url'), 1) . '</pre>';
-        echo '<pre>' . 'foundByKey controller = ' . print_r($routeBagActive[$key]->controller, 1) . '</pre>';
-        echo '<pre>' . 'foundByKey action = ' . print_r($routeBagActive[$key]->action, 1) . '</pre>';
+        logger('Passing to Controller');
+        logger('class = ' . $routeBagActive[$key]->controller);
+        logger('action = ' . $routeBagActive[$key]->action);
 
-//         $controllerInstance = new ArticleController;
-//         $controllerInstance->index();
+        // Example
+        // $controllerInstance = new ArticleController;
+        // $controllerInstance->index();
 
         $controllerClassName = 'App\Controllers\\' . $routeBagActive[$key]->controller;
         $controllerActionName = $routeBagActive[$key]->action;
@@ -107,9 +83,11 @@ final class RouteHandler
         $controllerInstance = new $controllerClassName;
         $controllerInstance->$controllerActionName();
 
-        // todo
-        //  parse request parameters to
-        //  id ?
+    }
 
+    public static function getRouteByName()
+    {
+        throw new BasicException('Route::getRouteByName not implemented');
+        //todo implement ... move to Route object instead of route handler
     }
 }
