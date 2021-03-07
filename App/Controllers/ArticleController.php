@@ -15,17 +15,17 @@ class ArticleController extends Controller
 
     function index()
     {
-        $article = new Article();
-        $article->getList();
+        $articles = Article::getList();
 
-        ViewHandler::doSomething('index', ['articles' => $article->getList()]);
+        ViewHandler::doSomething('index', ['articles' => $articles]);
         return 'mock_data'; //todo research further
     }
 
     function show()
     {
-        $article = new Article();
-        ViewHandler::doSomething('show', ['article' => $article->getSingle()]);
+        $article = Article::getSingle(1);
+
+        ViewHandler::doSomething('show', ['article' => $article]);
         return 'mock_data'; //todo research further
     }
 }

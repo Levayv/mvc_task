@@ -31,7 +31,7 @@ class Kernel
         $request = new Request();
 
         try {
-            RouteHandler::handleRequest($request);
+            (new RouteHandler)->handleRequest($request);
         } catch (FatalException $exception) {
 
             // todo refactor error 500 to fatal

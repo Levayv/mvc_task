@@ -7,7 +7,6 @@ use Core\Exceptions\BasicException;
 
 class FatalException extends BasicException
 {
-
     /**
      * @param \Core\Exceptions\BasicException $exception
      */

@@ -46,17 +46,17 @@ final class RouteHandler
      * @param Request $request
      * @throws BasicException
      */
-    public static function handleRequest(Request $request)
+    public function handleRequest(Request $request)
     {
 
         // todo change this solution , it is for single resource handling ONLY
         $routePath = $request->getURL();
         $routeBagActive = null;
 
-        if ($request->method() == 'GET') {
+        if ($request->method() == 'get') {
             $routeBagActive = self::$routeBagGET;
         }
-        if ($request->method() == 'POST') {
+        if ($request->method() == 'post') {
             $routeBagActive = self::$routeBagPOST;
         }
 

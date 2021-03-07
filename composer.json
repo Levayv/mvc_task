@@ -11,7 +11,9 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "php": "^7.4"
+    "php": "^7.4",
+    "ext-mbstring": "*",
+    "ext-pdo": "*"
   },
   "autoload": {
     "psr-4": {

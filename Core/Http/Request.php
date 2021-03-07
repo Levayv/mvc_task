@@ -36,7 +36,7 @@ class Request
             throw new BasicException('unsupported request method (must be GET or POST)', 400);
         }
 
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->method = strtolower($_SERVER['REQUEST_METHOD']);
         $this->url = $_SERVER['REQUEST_URI'];
         $this->params = ['1' => '2']; // todo get request query parameters
 
