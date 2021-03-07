@@ -4,6 +4,7 @@ namespace Core\Http;
 
 use Core;
 use Core\Exceptions\BasicException;
+use DateTime;
 
 class Request
 {
@@ -42,7 +43,7 @@ class Request
 
         logger('--------------------------');
         logger('Handling Request');
-        logger('time = ' . ((new \DateTime())->setTimestamp($_SERVER['REQUEST_TIME']))->format('U >> Y-m-d H:i:s'));
+        logger('time = ' . ((new DateTime())->setTimestamp($_SERVER['REQUEST_TIME']))->format('U >> Y-m-d H:i:s'));
         logger('method = ' . $this->method);
         logger('url = ' . $this->url);
         logger('params = ' . implode($this->params));

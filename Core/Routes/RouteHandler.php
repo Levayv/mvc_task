@@ -3,7 +3,6 @@
 namespace Core\Routes;
 
 use Core\Exceptions\BasicException;
-use Core\Exceptions\FatalException;
 use Core\Http\Request;
 
 final class RouteHandler

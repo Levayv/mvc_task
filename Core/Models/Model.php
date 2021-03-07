@@ -189,7 +189,7 @@ class DBConnection
 {
     private string $type = 'mysql';
     private string $host = 'localhost';
-    private string $port = '3306';
+    private string $port = '3306'; //todo add to $dataSource
     private string $schema;
     private string $username;
     private string $password;

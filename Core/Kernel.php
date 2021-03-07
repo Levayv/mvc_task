@@ -3,7 +3,6 @@
 namespace Core;
 
 use Core\Exceptions\BasicException;
-use Core\Exceptions\FatalException;
 use Core\Http\Request;
 use Core\Routes\RouteHandler;
 use Core\Views\ViewHandler;
@@ -32,11 +31,6 @@ class Kernel
 
         try {
             (new RouteHandler)->handleRequest($request);
-        } catch (FatalException $exception) {
-
-            // todo refactor error 500 to fatal
-            throw new \Exception($exception);
-
         } catch (BasicException $exception) {
 
             $code = $exception->getCode();
@@ -54,7 +48,7 @@ class Kernel
                 ViewHandler::doSomething($code, $exception->getMessage());
                 return;
             }
-            throw new FatalException($exception);
+            throw new BasicException($exception);
 
         }
     }

@@ -3,6 +3,8 @@
 namespace Core\Views;
 
 
+use Core\Exceptions\BasicException;
+
 class ViewHandler
 {
     // todo
@@ -16,16 +18,16 @@ class ViewHandler
         self::renderHTML($view);
     }
 
-    private function renderHTML(View $view) // todo add subviews
+    private static function renderHTML(View $view) // todo add subviews
     {
         ob_start();
-        echo '<!DOCTYPE html><html><body>';
+        echo '<!DOCTYPE html><html lang="en"><body>';
         self::renderView($view);
         echo '</body></html>';
         echo ob_get_clean();
     }
 
-    private function renderView(View $view)
+    private static function renderView(View $view)
     {
         // unpacking parameters . e.g. instead of $params['article']->name use $article->name
         foreach ($view->getParams() as $key => $value){
@@ -53,7 +55,7 @@ class View
     /**
      * Resolve path to generated view from template
      * @return string
-     * @throws \Exception
+     * @throws BasicException
      */
     private function resolveTemplate(): string
     {
@@ -61,15 +63,15 @@ class View
         $config_view_dir = '../views/source/';
         $config_view_cache_dir = '../views/final/';
 
-        if (true) { // todo add logic ... if file is .template.php
+        //if (true) { // todo add logic ... if file is .template.php
             // using name 'blade' is for the sake of convenience its nothing close to a templating engine
             $viewLocation = $config_view_dir . $this->name . '.blade.php';
             $viewCacheLocation = $config_view_cache_dir . $this->name . '.php'; //todo throw exceptions
 
             if (!file_exists($viewLocation))
-                throw new \Exception('view file is missing, path = ' . $viewLocation);
+                throw new BasicException('view file is missing, path = ' . $viewLocation);
             if (!file_exists($config_view_cache_dir) && !is_dir($config_view_cache_dir))
-                throw new \Exception('view cache folder is missing' . $config_view_cache_dir);
+                throw new BasicException('view cache folder is missing' . $config_view_cache_dir);
 
             $content = file_get_contents($viewLocation);
 
@@ -78,11 +80,11 @@ class View
             $content = str_replace('}}', ' ?>', $content);
 
             if (empty($content))
-                throw new \Exception('view corruption detected');
+                throw new BasicException('view corruption detected');
 
             file_put_contents($viewCacheLocation, $content);
             return $viewCacheLocation;
-        }
+        //}
     }
 
     public function getFileLocation(): string
