@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use Core\Controllers\Controller;
-use Core\Models\Model;
+use App\Models\Article;
 use Core\Views\ViewHandler;
 
 class ArticleController extends Controller
@@ -15,14 +15,16 @@ class ArticleController extends Controller
 
     function index()
     {
-        $article = new Model();
+        $article = new Article();
+        $article->getList();
+
         ViewHandler::doSomething('index', ['articles' => $article->getList()]);
         return 'mock_data'; //todo research further
     }
 
     function show()
     {
-        $article = new Model();
+        $article = new Article();
         ViewHandler::doSomething('show', ['article' => $article->getSingle()]);
         return 'mock_data'; //todo research further
     }

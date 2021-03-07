@@ -66,7 +66,7 @@ final class RouteHandler
             // todo research if this solution makes sense ? Is it even slightly faster then directly searching ?
         }
         if (!isset($key)) {
-            throw new BasicException('route not found', 500);
+            throw new BasicException('route not found', 404);
         }
 
         logger('Passing to Controller');

@@ -16,7 +16,7 @@ class Request
     */
     public function __construct()
     {
-        $this::getCurrentInfo();
+        $this->getCurrentInfo();
     }
 
     /**
@@ -25,11 +25,11 @@ class Request
      */
     private function getCurrentInfo()
     {
-        //todo STOP
-        if (!isset($_SERVER['REQUEST_URI'])) {
-            $_SERVER['REQUEST_URI'] = 'articles/7';
-        }
-        if (!isset($_SERVER['REQUEST_METHOD'])) $_SERVER['REQUEST_METHOD'] = 'GET';
+        if (!isset($_SERVER['REQUEST_URI']))
+            throw new BasicException('missing request path', 500);
+
+        if (!isset($_SERVER['REQUEST_METHOD']))
+            throw new BasicException('missing request method', 500);
 
         if (!$_SERVER['REQUEST_METHOD'] == 'GET' || !$_SERVER['REQUEST_METHOD'] == 'POST') {
             // todo implement redirect ?
