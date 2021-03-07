@@ -53,10 +53,10 @@ final class RouteHandler
         $routePath = $request->getURL();
         $routeBagActive = null;
 
-        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        if ($request->method() == 'GET') {
             $routeBagActive = self::$routeBagGET;
         }
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($request->method() == 'POST') {
             $routeBagActive = self::$routeBagPOST;
         }
 

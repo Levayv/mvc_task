@@ -45,11 +45,15 @@ class Request
         logger('time = ' . ((new \DateTime())->setTimestamp($_SERVER['REQUEST_TIME']))->format('U >> Y-m-d H:i:s'));
         logger('method = ' . $this->method);
         logger('url = ' . $this->url);
-        logger('params = ' . print_r($this->params));
+        logger('params = ' . implode($this->params));
     }
 
     public function getURL()
     {
         return $this->url;
+    }
+    public function method()
+    {
+        return $this->method;
     }
 }
